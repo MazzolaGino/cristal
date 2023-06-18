@@ -1,0 +1,185 @@
+@font-face {
+  font-family: 'game';
+  src: url(../font/body.ttf);
+}
+
+html {
+  height: 100%;
+  background-color: black;
+  font-family: 'game';
+  color: white;
+}
+
+#mine {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#shop,
+#cristal {
+
+  margin-bottom: 20px;
+}
+
+#cristal {
+  flex-basis: 70%;
+}
+
+#shop {
+  flex-basis: 28%;
+  height: 350px;
+  overflow-y: scroll;
+}
+
+#travel {
+  flex-basis: 50%;
+  height: 350px;
+}
+
+.travel {
+  flex-basis: 100%;
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.travel-name {
+  flex-basis: 30%;
+}
+
+.travel-drop {
+  flex-basis: 15%;
+}
+
+.travel-time {
+  flex-basis: 20%;
+}
+
+.travel-bar {
+  text-align: center;
+  display: flex; 
+  flex-basis: 45%;  
+  width: 100%;
+  background-color: gray;
+  padding: 1px;
+  border-radius: 5px;
+  height: 3px;
+}
+
+.travel-bar-fill {
+  display: block;
+  height: 3px;
+  background: linear-gradient(135deg, cyan, rgb(0, 102, 255)); 
+  border-radius: 3px;
+}
+
+.travel-rewards {
+  background-color: rgb(24, 211, 211);
+  font-family: 'Game';
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5%;
+}
+
+.shop-item {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  cursor: pointer;
+  width: 100%;
+}
+
+.item-image {
+  flex-basis: 10%;
+}
+
+.item-image img {
+  vertical-align: middle;
+}
+
+.item-name {
+  flex-basis: 50%;
+}
+
+.item-nb {
+  flex-basis: 20%;
+}
+
+.item-price {
+  flex-basis: 20%;
+}
+
+#cristal {
+  text-align: center;
+}
+
+
+#cristal img {
+
+  height: 250px;
+  width: 250px;
+  transition: transform 0.3s;
+  transition: filter 0.3s;
+  transform-origin: center bottom;
+  transition: transform 0.2s, opacity 0.45s;
+  transition-timing-function: ease-out;
+  cursor: url(../img/pickaxe.png), auto;
+
+}
+
+#cristal img:hover {
+  transform: scale(1.1);
+  filter: brightness(1.1);
+}
+
+#cristal img:active {
+  transform: scale(1.2);
+  filter: brightness(1.2);
+}
+
+@keyframes briller {
+  0% {
+    filter: brightness(1);
+  }
+
+  50% {
+    filter: brightness(1.5);
+  }
+
+  100% {
+    filter: brightness(1);
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media screen and (max-width: 900px) {
+
+  html {
+    font-size: 10px;
+  }
+
+  #cristal img {
+    height: 100px;
+    width: 100px;
+  }
+
+  #cristal-count {
+    font-size: 12px;
+  }
+
+  #shop, #cristal, #travel {
+    flex-basis: 100%;
+  }
+
+
+}
