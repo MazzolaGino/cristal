@@ -3,10 +3,84 @@
   src: url(../font/body.ttf);
 }
 
+:root {
+	--pixel-bg: lightblue;
+	/* ↑ Inner background color */
+	
+	--pixel-border:  black;
+	/* ↑ Inner border color */
+	
+	--pixel-border-2: rgb(0, 211, 226);
+	/* ↑ Middle border color */
+	
+	--pixel-border-3: rgb(0, 157, 255);
+	/* ↑ Outer border color */
+	
+	--pixel: .125rem;
+	/* ↑ Pixel size */
+}
+
+.pixel-border {
+	box-shadow:
+		
+	/* Pixel Border Layer 1 */
+		calc(var(--pixel) * -1) 0 0 0 var(--pixel-border),
+		var(--pixel) 0 0 0 var(--pixel-border),
+		0 calc(var(--pixel) * -2) 0 0 var(--pixel-border),
+		0 calc(var(--pixel) * 2) 0 0 var(--pixel-border),
+		0 calc(var(--pixel) * -5) 0 calc(var(--pixel) * -1) var(--pixel-border),
+		0 calc(var(--pixel) * 5) 0 calc(var(--pixel) * -1) var(--pixel-border),
+		0 calc(var(--pixel) * -7) 0 calc(var(--pixel) * -2) var(--pixel-border),
+		0 calc(var(--pixel) * 7) 0 calc(var(--pixel) * -2) var(--pixel-border),
+		0 calc(var(--pixel) * -10) 0 calc(var(--pixel) * -4) var(--pixel-border),
+		0 calc(var(--pixel) * 10) 0 calc(var(--pixel) * -4) var(--pixel-border),
+		0 calc(var(--pixel) * -13) 0 calc(var(--pixel) * -6) var(--pixel-border),
+		0 calc(var(--pixel) * 13) 0 calc(var(--pixel) * -6) var(--pixel-border),
+		
+	/* Pixel Border Layer 2 */
+		calc(var(--pixel) * -2) 0 0 0 var(--pixel-border-2),
+		calc(var(--pixel) * 2) 0 0 0 var(--pixel-border-2),
+		0 calc(var(--pixel) * -1) 0 var(--pixel) var(--pixel-border-2), 
+		0 var(--pixel) 0 var(--pixel) var(--pixel-border-2),
+		0 calc(var(--pixel) * -4) 0 0 var(--pixel-border-2),
+		0 calc(var(--pixel) * 4) 0 0 var(--pixel-border-2),
+		0 calc(var(--pixel) * -6) 0 calc(var(--pixel) * -1) var(--pixel-border-2),
+		0 calc(var(--pixel) * 6) 0 calc(var(--pixel) * -1) var(--pixel-border-2),
+		0 calc(var(--pixel) * -8) 0 calc(var(--pixel) * -2) var(--pixel-border-2),
+		0 calc(var(--pixel) * 8) 0 calc(var(--pixel) * -2) var(--pixel-border-2),
+		0 calc(var(--pixel) * -11) 0 calc(var(--pixel) * -4) var(--pixel-border-2),
+		0 calc(var(--pixel) * 11) 0 calc(var(--pixel) * -4) var(--pixel-border-2),
+		0 calc(var(--pixel) * -14) 0 calc(var(--pixel) * -6) var(--pixel-border-2),
+		0 calc(var(--pixel) * 14) 0 calc(var(--pixel) * -6) var(--pixel-border-2),
+		
+	/* Border Layer 3: --pixel-border-3 */
+		calc(var(--pixel) * -3) 0 0 0 var(--pixel-border-3),
+		calc(var(--pixel) * 3) 0 0 0 var(--pixel-border-3),
+		0 0 0 calc(var(--pixel) * 2) var(--pixel-border-3),
+		0 calc(var(--pixel) * -3) 0 var(--pixel) var(--pixel-border-3),
+		0 calc(var(--pixel) * 3) 0 var(--pixel) var(--pixel-border-3),
+		0 calc(var(--pixel) * -5) 0 0 var(--pixel-border-3),
+		0 calc(var(--pixel) * 5) 0 0 var(--pixel-border-3),
+		0 calc(var(--pixel) * -7) 0 calc(var(--pixel) * -1) var(--pixel-border-3),
+		0 calc(var(--pixel) * 7) 0 calc(var(--pixel) * -1) var(--pixel-border-3),
+		0 calc(var(--pixel) * -9) 0 calc(var(--pixel) * -2) var(--pixel-border-3), 
+		0 calc(var(--pixel) * 9) 0 calc(var(--pixel) * -2) var(--pixel-border-3),
+		0 calc(var(--pixel) * -12) 0 calc(var(--pixel) * -4) var(--pixel-border-3), 
+		0 calc(var(--pixel) * 12) 0 calc(var(--pixel) * -4) var(--pixel-border-3),
+		0 calc(var(--pixel) * -15) 0 calc(var(--pixel) * -6) var(--pixel-border-3), 
+		0 calc(var(--pixel) * 15) 0 calc(var(--pixel) * -6) var(--pixel-border-3);
+}
+
+img {
+  image-rendering: pixelated;
+}
+
+
 html {
   height: 100%;
   background-color: black;
   font-family: 'game';
+  font-size: 14px;
   color: white;
 }
 
@@ -16,34 +90,44 @@ html {
 }
 
 #shop,
-#cristal {
-
-  margin-bottom: 20px;
+#cristal,
+#travel,
+#travel-finished{
+  margin: 30px;
 }
 
 #cristal {
-  flex-basis: 70%;
+  flex-basis: 45%;
 }
 
-#shop {
-  flex-basis: 28%;
+#shop, #travel-finished {
+  flex-basis: 35%;
   height: 350px;
   overflow-y: scroll;
+  padding: 20px;
 }
 
-#travel {
-  flex-basis: 50%;
+
+#travel{
+  flex-basis: 45%;
   height: 350px;
 }
+
 
 .travel {
   flex-basis: 100%;
   display: flex;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 .travel-name {
-  flex-basis: 30%;
+  flex-basis: 10%;
+}
+
+.travel-name img {
+  vertical-align: middle;
+  height: 40px;
+  width: 60px;
 }
 
 .travel-drop {
@@ -68,24 +152,41 @@ html {
 .travel-bar-fill {
   display: block;
   height: 3px;
-  background: linear-gradient(135deg, cyan, rgb(0, 102, 255)); 
+  background: linear-gradient(135deg, cyan, rgb(0, 102, 255));
   border-radius: 3px;
 }
 
-.travel-rewards {
+.travel-rewards, .buy-item {
   background-color: rgb(24, 211, 211);
   font-family: 'Game';
-  font-size: 16px;
+  font-size: 13px;
   cursor: pointer;
   border-radius: 5%;
+  padding: 2px;
 }
 
+.not-sale {
+  background-color: rgb(255, 0, 106);
+  font-family: 'Game';
+  font-size: 13px;
+  border-radius: 5%;
+  padding: 2px;
+}
+
+#shop {
+  display: flex;
+  flex-wrap: wrap;
+}
+.shop-item:active{
+  filter: brightness(1.2);
+}
 .shop-item {
+  flex-basis: 45%;
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
-  cursor: pointer;
   width: 100%;
+  margin-right: 10px;
 }
 
 .item-image {
@@ -96,16 +197,12 @@ html {
   vertical-align: middle;
 }
 
-.item-name {
-  flex-basis: 50%;
-}
-
 .item-nb {
-  flex-basis: 20%;
+  flex-basis: 60%;
 }
 
 .item-price {
-  flex-basis: 20%;
+  flex-basis: 30%;
 }
 
 #cristal {
@@ -114,7 +211,6 @@ html {
 
 
 #cristal img {
-
   height: 250px;
   width: 250px;
   transition: transform 0.3s;
@@ -123,7 +219,6 @@ html {
   transition: transform 0.2s, opacity 0.45s;
   transition-timing-function: ease-out;
   cursor: url(../img/pickaxe.png), auto;
-
 }
 
 #cristal img:hover {
@@ -134,6 +229,11 @@ html {
 #cristal img:active {
   transform: scale(1.2);
   filter: brightness(1.2);
+}
+
+.waiting {
+  background-color: rgb(255, 0, 106);
+  cursor: progress;
 }
 
 @keyframes briller {
@@ -165,7 +265,7 @@ html {
 @media screen and (max-width: 900px) {
 
   html {
-    font-size: 10px;
+    font-size: 12px;
   }
 
   #cristal img {
@@ -177,7 +277,7 @@ html {
     font-size: 12px;
   }
 
-  #shop, #cristal, #travel {
+  #shop, #cristal, #travel, #travel-finished, .shop-item{
     flex-basis: 100%;
   }
 

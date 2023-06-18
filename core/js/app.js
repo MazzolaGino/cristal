@@ -2,24 +2,40 @@ class Game {
 
   constructor() {
 
-    document.addEventListener('click', function (e) {
-
-      console.log(e.target.classList);
-
-      if (e.target.classList.contains('cristal')) {
-
-        const coords = { x: e.pageX, y: e.pageY };
-        burst.tune(coords).replay();
-        _game.increment();
-      }
+    document.addEventListener('click', (e) => {
 
       if (e.target.parentNode.classList.contains('travel-end')) {
         this.endTravel(JSON.parse(e.target.dataset.value));
         e.target.parentNode.parentNode.remove();
       }
 
+      if (e.target.classList.contains('buy-item')) {
 
-    }.bind(this));
+        e.target.classList.remove('buy-item');
+        e.target.parentNode.classList.add('waiting');
+        e.target.innerHTML = '';
+        
+        let item = JSON.parse(e.target.parentNode.dataset.value);
+
+        let sItem = this.shop.filter(si => si.name === item.name)[0];
+
+        
+        sItem.nb++;
+        sItem.price *= 1.3;
+
+        if (this.click - sItem.price >= 0) {
+          this.click -= sItem.price;
+
+          this.updateCristalCount();
+
+          localStorage.setItem('click', this.click);
+          localStorage.setItem('shop', JSON.stringify(this.shop));
+          
+          this.refreshShop();
+      }
+    }
+
+    });
 
 
     this.shop = JSON.parse(localStorage.getItem('shop')) || [
@@ -151,42 +167,36 @@ class Game {
   refreshShop() {
     const shop = document.getElementById('shop');
     shop.innerHTML = '';
-
+  
     this.shop.forEach((item) => {
-      if (this.click < item.price) return;
+
+      const nb = document.createElement('a');
+
+      if (this.click < item.price) {
+        nb.classList.remove('buy-item');
+        nb.classList.add('not-sale');
+        nb.innerHTML = 'not for sale';
+      
+      }else {
+        nb.classList.remove('not-sale');
+        nb.classList.add('buy-item');
+        nb.innerHTML = 'buy';
+      }
 
       const itm = document.createElement('div');
       itm.id = item.name.replace(/\s/g, '');
       itm.classList.add('shop-item');
 
-      const name = document.createElement('span');
-      name.classList.add('item-name');
-      name.innerHTML = item.name;
-
       const image = document.createElement('img');
       image.classList.add('item-image');
       image.src = 'core/img/' + item.name.replace(/\s/g, '') + '.png';
-
-      const nb = document.createElement('span');
-      nb.classList.add('item-nb');
-      nb.innerHTML = item.nb;
 
       const price = document.createElement('span');
       price.classList.add('item-price');
       price.innerHTML = this.format(item.price);
 
-      itm.append(image, name, nb, price);
-      itm.addEventListener('click', () => {
-        item.nb++;
-        item.price *= 1.15;
-        if (this.click - item.price >= 0) {
-          this.click -= item.price;
-          this.updateCristalCount();
-          localStorage.setItem('click', this.click);
-          localStorage.setItem('shop', JSON.stringify(this.shop));
-          this.refreshShop();
-        }
-      });
+      itm.append(image, price, nb);
+      itm.dataset.value = JSON.stringify(item);
 
       shop.append(itm);
     });
@@ -239,11 +249,14 @@ class Game {
     return "travel " + randomAdjective + "-" + randomNoun + "-" + randomVerb;
   }
 
-  generateTravel(minutes) {
+  generateTravel() {
+
+    const minutes = Math.floor(Math.random() * 30) + 1;
     const startTime = new Date().getTime();
     const endTime = startTime + (minutes * 60 * 1000);
     const time = minutes;
-    const drop = time * 1000;
+    const drop = time * 60 * this.bonus();
+    
 
     return {
       name: this.generateAdventureName(),
@@ -274,17 +287,9 @@ class Game {
       wrapper.classList.add('travel');
       wrapper.classList.add('end');
 
-      let travelName = document.createElement('div');
-      travelName.classList.add('travel-name');
-      travelName.innerHTML = travel.name;
-
       let travelDrop = document.createElement('div');
       travelDrop.classList.add('travel-drop');
       travelDrop.innerHTML = '💎' + this.format(travel.drop);
-
-      let travelTime = document.createElement('div');
-      travelTime.classList.add('travel-time');
-      travelTime.innerHTML = travel.time + ' min';
 
       let travelEnd = document.createElement('div');
       travelEnd.classList.add('travel-end');
@@ -297,15 +302,15 @@ class Game {
 
       travelEnd.append(link);
 
-      wrapper.append(travelName, travelDrop, travelTime, travelEnd);
+      wrapper.append(travelDrop, travelEnd);
 
-      document.getElementById('travel').append(wrapper);
+      document.getElementById('travel-finished').append(wrapper);
 
 
     } else {
       document.getElementById('travel').innerHTML += /* html */ `
       <div id="${travel.name.replace(/\s/g, '')}" class="travel">
-          <div class="travel-name">${travel.name}</div>
+          <div class="travel-name"><img src="core/img/travel.gif"></div>
           <div class="travel-drop">💎${this.format(parseFloat(travel.drop))}</div>
           <div class="travel-time">${travel.time} min</div>
           <div class="travel-bar">
@@ -385,7 +390,7 @@ class Game {
 
   removeTravel(travel) {
     this.travel = this.travel.filter(item => item.name !== travel.name);
-    localStorage.setItem('travel', JSON.stringify(travel));
+    localStorage.setItem('travel', JSON.stringify(this.travel));
   }
 
   travelIsFinished(travel) {
